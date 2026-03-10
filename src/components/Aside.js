@@ -81,7 +81,7 @@ const Aside = () => {
               </div>
             </div>
           </div>
-          <div className="pt-[10px] pb-[14px] flex items-center gap-[6px]">
+          <div className=" ps-[15px] pt-[10px] pb-[14px] flex items-center gap-[6px]">
             <span className="w-[6px] h-[6px] bg-[#10B981] rounded-full"></span>
             <span className="font-['Tomato_Grotesk'] font-bold text-[11px] leading-[16.5px] tracking-0 text-[#555555]">
               Connected

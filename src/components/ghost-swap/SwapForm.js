@@ -68,7 +68,7 @@ const SwapForm = ({
   };
 
   return (
-    <div className="w-full max-w-[520px] mx-auto flex flex-col gap-[24px] mt-[40px] px-4 md:px-0">
+    <div className="w-full max-w-[520px] mx-auto flex flex-col gap-[24px] mt-[40px] px-[25px] md:px-0">
       {/* You Pay and You Receive Cards */}
       <div className="flex flex-col gap-[16px] relative">
         {/* You Pay Card */}

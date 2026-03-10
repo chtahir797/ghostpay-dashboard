@@ -40,7 +40,7 @@ export default function Referrals() {
     <DashboardLayout>
       <div className="flex flex-col h-full bg-[#000000]">
         <Header title="Referrals" subtitle="Invite friends and earn points on their volume." />
-        <main className="p-[12px] sm:p-[20px] flex flex-col gap-[20px]">
+        <main className="md:p-[12px] p-[25px] flex flex-col gap-[20px]">
           {/* Top Cards Row */}
           <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[24px]">
             {/* Your Points Card */}

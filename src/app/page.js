@@ -9,6 +9,7 @@ import ActivityList from "../components/home/ActivityList";
 import SendIcon from "../icons/SendIcon";
 import SwapIcon from "../icons/SwapIcon";
 import BuyGhostIcon from "../icons/BuyGhostIcon";
+import MobileHomeHeader from '@/components/home/MobileHomeHeader';
 
 const assets = [
   { name: 'ETH', balance: '0.006714 ETH', price: '$17.79', change: '+2.4%', icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=035' },
@@ -19,10 +20,10 @@ const assets = [
 ];
 
 const activities = [
-  { type: 'Ghost Send', details: '0.006714 ETH', change: '-0.002 ETH', time: '2h ago', icon: <SendIcon color="#808080" /> },
-  { type: 'Ghost Swap', details: 'SOL → ETH', change: '+.49 ETH', time: '1d ago', icon: <SwapIcon color="#808080" /> },
-  { type: 'Buy $Ghost', details: '21,340 Ghost', change: '$42.50', time: '3d ago', icon: <BuyGhostIcon /> },
-  { type: 'Ghost Send', details: 'vault.sol', change: '-15.00 USDT', time: '5d ago', icon: <SendIcon color="#808080" /> },
+  { type: 'Ghost Send', details: '0.006714 ETH', change: '-0.002 ETH', time: '2h ago', icon: <SendIcon width={20} height={20} color="#808080" /> },
+  { type: 'Ghost Swap', details: 'SOL → ETH', change: '+.49 ETH', time: '1d ago', icon: <SwapIcon width={20} height={20} color="#808080" /> },
+  { type: 'Buy $Ghost', details: '21,340 Ghost', change: '$42.50', time: '3d ago', icon: <BuyGhostIcon width={36} height={36} /> },
+  { type: 'Ghost Send', details: 'vault.sol', change: '-15.00 USDT', time: '5d ago', icon: <SendIcon width={20} height={20} color="#808080" /> },
 ];
 
 export default function Home() {
@@ -45,10 +46,14 @@ export default function Home() {
   return (
     <DashboardLayout>
       <div className="flex flex-col h-full bg-[#000000]">
-        <Header title="Ghost Overview" subtitle="Welcome back, King Bob" />
-
+        <div className='hidden md:block'>
+          <Header title="Ghost Overview" subtitle="Welcome back, King Bob" />
+        </div>
+        
+      {/* MobileHomeHeader */}
+        <MobileHomeHeader />
         {/* Main Content */}
-        <main className="p-[12px] sm:p-[20px] flex flex-col gap-[20px]">
+        <main className="md:p-[12px] p-[25px] flex flex-col gap-[20px]">
           {/* Wallet Balance Card */}
           <WalletBalanceCard
             balance={balanceVisible ? "$385.45" : "****"}

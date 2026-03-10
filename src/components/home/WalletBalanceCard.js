@@ -16,7 +16,7 @@ const WalletBalanceCard = ({ balance, change, changeLabel = "today", onHideBalan
   ];
 
   return (
-    <div className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[20px] flex flex-col gap-[20px]">
+    <div className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[12px] md:p-[20px] flex flex-col gap-[20px] w-full">
       <div className="flex justify-between items-center">
         <span className="font-['Tomato_Grotesk'] font-bold text-[14px] leading-[14px] tracking-0 text-[#808080]">
           Wallet Balance
@@ -48,7 +48,7 @@ const WalletBalanceCard = ({ balance, change, changeLabel = "today", onHideBalan
         )}
       </div>
 
-      <div className="flex gap-[12px] md:gap-[12px] overflow-x-auto pb-2 md:pb-0">
+      <div className="flex flex-wrap gap-[16px] md:gap-[12px] pb-2 md:pb-0">
         {actionButtons.map((button, index) => {
           const ButtonIcon = button.icon;
           const buttonContent = (
@@ -68,7 +68,7 @@ const WalletBalanceCard = ({ balance, change, changeLabel = "today", onHideBalan
           return button.href === '#' ? (
             <button
               key={index}
-              className="w-[70px] h-[56px] md:w-[120px] md:h-[40px] bg-[#151515] rounded-[10px] flex flex-col md:flex-row items-center justify-center gap-[4px] group hover:bg-[#222] transition-colors flex-shrink-0"
+              className="w-[70px] h-[56px] md:w-[120px] md:h-[40px] bg-[#ffffff06] border border-[#ffffff05] rounded-[10px] flex flex-col md:flex-row items-center justify-center gap-[4px] group hover:bg-[#222] transition-colors flex-shrink-0"
             >
               {buttonContent}
             </button>

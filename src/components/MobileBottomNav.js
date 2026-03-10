@@ -21,7 +21,7 @@ const MobileBottomNav = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden w-full">
       {/* Navigation Bar */}
       <div className="bg-[#0B0B0B] border-t border-[#151515] rounded-t-[20px] px-[8px] pt-[12px] pb-safe">
         <div className="flex justify-around items-center">

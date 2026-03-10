@@ -1,5 +1,5 @@
 import React from 'react';
-import AssetIcon from '../ghost-pay/AssetIcon';
+import AssetIcon from '../common/dropdown/AssetIcon';
 import ArrowDownIcon from '@/icons/ArrowDownIcon';
 
 const CurrencyCard = ({
@@ -29,16 +29,16 @@ const CurrencyCard = ({
 
       {/* Amount and Currency Selector */}
       <div className="flex items-center justify-between">
-        {/* Mobile: Read-only input */}
+        {/* Mobile*/}
         <input
           type="text"
           value={amount}
           readOnly={readOnly}
           onChange={(e) => !readOnly && onAmountChange(e.target.value)}
-          className={`md:hidden font-['Tomato_Grotesk'] font-extrabold text-[48px] leading-[51px] tracking-0 text-[#ffffff]  bg-transparent border-none outline-none w-auto pointer-events-none`}
+          className={`md:hidden w-full font-['Tomato_Grotesk'] font-extrabold text-[48px] leading-[51px] tracking-0 text-[#ffffff] bg-transparent border-none outline-none flex-1 min-w-0 pointer-events-none`}
           style={{ caretColor: 'transparent' }}
         />
-        {/* Desktop: Editable input */}
+        {/* Desktop */}
         <input
           type="text"
           value={amount}
@@ -50,7 +50,7 @@ const CurrencyCard = ({
           className="flex flex-col gap-[5px] items-end"
         >
           <div className="bg-[#000000] border border-[#151515] rounded-[16px] md:p-[10px] p-[8px] flex items-center gap-[8px] hover:border-[#222] transition-colors">
-            {/* Mobile: 20px, Desktop: 25px */}
+          
             <div className="md:hidden">
               <AssetIcon icon={currency.icon} size={20} />
             </div>
