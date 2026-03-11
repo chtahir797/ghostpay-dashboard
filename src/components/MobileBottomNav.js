@@ -27,8 +27,34 @@ const MobileBottomNav = () => {
         <div className="flex justify-around items-center">
           {mobileNavItems.map((item) => {
             const isActive = pathname === item.href;
-            const iconColor = isActive ? "#8CFFEC" : "#808080";
-            const textColor = isActive ? "text-[#8CFFEC]" : "text-[#808080]";
+            const isHome = item.name === 'Home';
+            const isSend = item.name === 'Send';
+            const isPay = item.name === 'Pay';
+            const isSwap = item.name === 'Swap';
+            const isRoute = item.name === 'Route';
+            
+            // Match desktop aside colors
+            let iconColor = "#808080";
+            let textColor = "text-[#808080]";
+            
+            if (isActive) {
+              if (isSend) {
+                iconColor = "#FB923C";
+                textColor = "text-[#FB923C]";
+              } else if (isPay) {
+                iconColor = "#59FF96";
+                textColor = "text-[#59FF96]";
+              } else if (isSwap) {
+                iconColor = "#B39BFD";
+                textColor = "text-[#B39BFD]";
+              } else if (isRoute) {
+                iconColor = "#FB3C3C";
+                textColor = "text-[#FB3C3C]";
+              } else if (isHome) {
+                iconColor = "#8CFFEC";
+                textColor = "text-[#8CFFEC]";
+              }
+            }
 
             return (
               <Link

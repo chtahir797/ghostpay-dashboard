@@ -5,10 +5,8 @@ import Link from 'next/link';
 import Header from "@/components/Header";
 import DashboardLayout from "../DashboardLayout";
 import SendForm from "@/components/ghost-send/SendForm";
-import AssetIcon from "@/components/common/dropdown/AssetIcon";
 import LinkInput from "@/components/common/LinkInput";
-import LogoIcon from "@/icons/LogoIcon";
-import ArrowRightIcon from "@/icons/ArrowRightIcon";
+import TransactionSuccessView from "@/components/common/TransactionSuccessView";
 import { ChevronLeftIcon, X } from 'lucide-react';
 
 const assets = [
@@ -106,120 +104,24 @@ export default function GhostPay() {
             </h1>
           </header>
         )}
-        <main className=" flex flex-col gap-[20px]">
+        <main className=" flex flex-col gap-[20px] px-[25px]">
           {showSuccess ? (
             // Transaction Success View
-            <div className="w-full max-w-[520px] mx-auto pt-[40px] flex flex-col gap-[24px] px-[25px] md:px-0">
-              {/* Logo */}
-              <div className="flex justify-center">
-                <LogoIcon width={82} height={82} color='#EA7A2A'/>
-              </div>
-
-              {/* Success Message + Date */}
-              <div className="flex flex-col gap-[4px] items-center">
-                <p className="font-['Tomato_Grotesk'] font-bold text-[26px] leading-[34.5px] tracking-[-0.5px] text-[#ffffff]">
-                  Sent Successfully
-                </p>
-                <p className="font-['Tomato_Grotesk'] font-bold text-[13px] leading-[19.5px] tracking-0 text-[#808080]">
-                  {formatDate()}
-                </p>
-              </div>
-
-              {/* Amount + Coin Name + Balance */}
-              <div className="flex flex-col gap-[12px] items-center">
-                <div className="flex items-baseline gap-[2px]">
-                  <p className="font-['Tomato_Grotesk'] font-bold text-[36px] md:text-[48px] leading-[34px] md:leading-[46px] tracking-[-2px] text-[#ffffff]">
-                    {amount}
-                  </p>
-                  {selectedAsset && (
-                    <p className="font-['Tomato_Grotesk'] font-semibold text-[20px] md:text-[24px] leading-[18px] md:leading-[22px] tracking-0 text-[#808080]">
-                      {selectedAsset.symbol}
-                    </p>
-                  )}
-                </div>
-                <p className="font-['Tomato_Grotesk'] font-normal text-[16px] leading-[21px] tracking-0 text-[#808080]">
-                  $2424.61 USD
-                </p>
-              </div>
-
-              {/* Information Section */}
-              <div className="flex flex-col gap-[12px] max-w-[480px] mx-auto w-full">
-                <div className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] overflow-hidden">
-                  {/* To Section */}
-                  {recipient && (
-                    <div className="px-[10px] py-[12px] flex justify-between items-center border-b border-[#151515]">
-                      <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#808080]">
-                        To
-                      </p>
-                      <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#ffffff]">
-                        {formatAddress(recipient)}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Asset Section */}
-                  {selectedAsset && (
-                    <div className="px-[10px] py-[12px] flex justify-between items-center border-b border-[#151515]">
-                      <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#808080]">
-                        Asset
-                      </p>
-                      <div className="flex items-center gap-[8px]">
-                        <AssetIcon icon={selectedAsset.icon} size={20} />
-                        <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#ffffff]">
-                          {selectedAsset.name}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Status Section */}
-                  <div className="px-[10px] py-[12px] flex justify-between items-center border-b border-[#151515]">
-                    <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#808080]">
-                      Status
-                    </p>
-                    <div className="flex items-center gap-[8px]">
-                      <div className="w-[8px] h-[8px] bg-[#FB923C] rounded-full"></div>
-                      <p className="font-['Tomato_Grotesk'] font-semibold text-[13px] leading-[19.5px] tracking-0 text-[#FB923C]">
-                        Confirmed
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Tx Hash Section */}
-                  <div className="px-[10px] py-[12px] flex justify-between items-center">
-                    <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#808080]">
-                      Tx Hash
-                    </p>
-                    <div className="flex items-center gap-[8px]">
-                      <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#ffffff]">
-                        {formatAddress('abcd......1234')}
-                      </p>
-                      <button 
-                        onClick={() => handleCopyTxHash('abcd......1234')}
-                        className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 bg-[#222222] py-[8px] px-[9px] rounded-[7px] border border-[#808080] hover:bg-[#2a2a2a] transition-colors"
-                      >
-                        Copy
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* View on Explorer Link */}
-                <Link href="#" className="flex items-center gap-[4px] justify-center">
-                  <span className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#808080] hover:text-[#ffffff] transition-colors">
-                    View on Explorer
-                  </span>
-                  <ArrowRightIcon width={12} height={12} color="#808080" className="rotate-320"/>
-                </Link>
-              </div>
-
-              {/* Back to Home Button */}
-              <Link href="/" className="w-full bg-[#FB923C] rounded-full py-[16px] px-[20px] hover:bg-[#EA7A2A] transition-colors text-center">
-                <span className="font-['Tomato_Grotesk'] font-bold text-[20px] leading-[24px] tracking-0 text-[#000000]">
-                  Back to Home
-                </span>
-              </Link>
-            </div>
+            <TransactionSuccessView
+              title="Sent Successfully"
+              amount={amount}
+              asset={selectedAsset}
+              usdValue="$2424.61 USD"
+              logoColor="#EA7A2A"
+              buttonColor="#FB923C"
+              buttonHoverColor="#EA7A2A"
+              statusColor="#FB923C"
+              recipient={recipient}
+              txHash="abcd......1234"
+              onCopyTxHash={handleCopyTxHash}
+              formatAddress={formatAddress}
+              formatTimestamp={formatDate}
+            />
           ) : !showSendForm ? (
             <LinkInput
               label="Recipient"

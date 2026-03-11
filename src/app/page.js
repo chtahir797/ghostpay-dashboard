@@ -12,11 +12,11 @@ import BuyGhostIcon from "../icons/BuyGhostIcon";
 import MobileHomeHeader from '@/components/home/MobileHomeHeader';
 
 const assets = [
-  { name: 'ETH', balance: '0.006714 ETH', price: '$17.79', change: '+2.4%', icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png?v=035' },
-  { name: 'SOL', balance: '1.42 SOL', price: '$210.16', change: '+5.1%', icon: 'https://cryptologos.cc/logos/solana-sol-logo.png?v=035' },
-  { name: 'USDC', balance: '42.5 USDC', price: '$42.50', change: '0%', icon: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png?v=035' },
-  { name: 'USDT', balance: '15 USDT', price: '$15.00', change: '0%', icon: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=035' },
-  { name: 'USD1', balance: '100 USD1', price: '$100.00', change: '0%', icon: 'https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png?v=035' },
+  { name: 'ETH', balance: '0.006714 ETH', price: '$17.79', change: '+2.4%', icon: 'eth' },
+  { name: 'SOL', balance: '1.42 SOL', price: '$210.16', change: '+5.1%', icon: 'sol' },
+  { name: 'USDC', balance: '42.5 USDC', price: '$42.50', change: '0%', icon: 'usdc' },
+  { name: 'USDT', balance: '15 USDT', price: '$15.00', change: '0%', icon: 'usdt' },
+  { name: 'USD1', balance: '100 USD1', price: '$100.00', change: '0%', icon: 'usd1' },
 ];
 
 const activities = [

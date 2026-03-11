@@ -16,7 +16,7 @@ const LinkInput = ({
   showLogo = false,
 }) => {
   return (
-    <div className="w-full max-w-[520px] mx-auto pt-[40px] flex flex-col gap-[20px] px-[25px] md:px-0">
+    <div className="w-full max-w-[520px] mx-auto pt-[40px] flex flex-col gap-[20px] ">
       {/* Label */}
       <p className="font-['Tomato_Grotesk'] font-semibold text-[14px] leading-[15px] tracking-0 text-[#808080]">
         {label}

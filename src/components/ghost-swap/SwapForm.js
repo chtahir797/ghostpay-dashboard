@@ -23,6 +23,7 @@ const SwapForm = ({
   onActiveInputChange,
 }) => {
   const [localActiveInput, setLocalActiveInput] = useState(activeInput || 'pay');
+  const [showKeypad, setShowKeypad] = useState(false);
 
   const currentActiveInput = activeInput || localActiveInput;
   const setActiveInput = onActiveInputChange || setLocalActiveInput;
@@ -72,7 +73,12 @@ const SwapForm = ({
       {/* You Pay and You Receive Cards */}
       <div className="flex flex-col gap-[16px] relative">
         {/* You Pay Card */}
-        <div onClick={() => setActiveInput('pay')}>
+        <div onClick={() => {
+          setActiveInput('pay');
+          if (typeof window !== 'undefined' && window.innerWidth < 768) {
+            setShowKeypad(true);
+          }
+        }}>
           <CurrencyCard
             label="You Pay"
             amount={payAmount}
@@ -84,7 +90,12 @@ const SwapForm = ({
             showBalance={true}
             isActive={currentActiveInput === 'pay'}
             readOnly={true}
-            onClick={() => setActiveInput('pay')}
+            onClick={() => {
+              setActiveInput('pay');
+              if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                setShowKeypad(true);
+              }
+            }}
           />
         </div>
 
@@ -96,7 +107,12 @@ const SwapForm = ({
         </div>
 
         {/* You Receive Card */}
-        <div onClick={() => setActiveInput('receive')}>
+        <div onClick={() => {
+          setActiveInput('receive');
+          if (typeof window !== 'undefined' && window.innerWidth < 768) {
+            setShowKeypad(true);
+          }
+        }}>
           <CurrencyCard
             label="You Receive"
             amount={receiveAmount}
@@ -106,7 +122,12 @@ const SwapForm = ({
             onCurrencyClick={onReceiveCurrencyClick}
             isActive={currentActiveInput === 'receive'}
             readOnly={true}
-            onClick={() => setActiveInput('receive')}
+            onClick={() => {
+              setActiveInput('receive');
+              if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                setShowKeypad(true);
+              }
+            }}
           />
         </div>
       </div>
@@ -146,11 +167,15 @@ const SwapForm = ({
       </div>
 
       {/* Numeric Keypad - Mobile Only */}
-      <NumericKeypad
-        onKeyPress={handleKeypadKeyPress}
-        onBackspace={handleKeypadBackspace}
-        onDecimal={handleKeypadDecimal}
-      />
+      {showKeypad && (
+        <div className="md:hidden">
+          <NumericKeypad
+            onKeyPress={handleKeypadKeyPress}
+            onBackspace={handleKeypadBackspace}
+            onDecimal={handleKeypadDecimal}
+          />
+        </div>
+      )}
 
       {/* Swap Button - Mobile shows "Swap", Desktop shows "Continue" */}
       <button

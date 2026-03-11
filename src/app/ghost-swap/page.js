@@ -16,7 +16,8 @@ import ClockIcon from '@/icons/ClockIcon';
 import ClipboardIcon from '@/icons/ClipboardIcon';
 import InfoIcon from '@/icons/InfoIcon';
 import MethodSelection from '@/components/common/MethodSelection';
-import { ChevronLeftIcon, ChevronsLeftIcon, X } from 'lucide-react';
+import OneTimeAddressView from '@/components/common/OneTimeAddressView';
+import { ArrowUpRight, ArrowUpRightIcon, ChevronLeftIcon, ChevronsLeftIcon, X } from 'lucide-react';
 
 const swapDelayOptions = ['Instant', '1m', '5m', '10m'];
 
@@ -192,45 +193,30 @@ export default function GhostSwap() {
                 <div className="w-full bg-[#0B0B0B] border border-[#151515] rounded-[16px] overflow-hidden">
                   <div className="px-[16px] py-[12px] flex justify-between items-center border-b border-[#151515]">
                     <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#808080]">
-                      Amount
+                      Amount Sent
                     </p>
                     <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#ffffff]">
-                      1.25 ETH
+                      100 USDC
                     </p>
                   </div>
                   <div className="px-[16px] py-[12px] flex justify-between items-center border-b border-[#151515]">
                     <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#808080]">
-                      Rate
+                      Amount Received
                     </p>
                     <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#ffffff]">
-                      1 ETH = 1987.50
+                      100 USDC
                     </p>
                   </div>
-                  <div className="px-[16px] py-[12px] flex justify-between items-center border-b border-[#151515]">
-                    <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#808080]">
-                      Status
-                    </p>
-                    <div className="flex items-center gap-[8px]">
-                      <div className="w-[8px] h-[8px] bg-[#B39BFD] rounded-full"></div>
-                      <p className="font-['Tomato_Grotesk'] font-semibold text-[13px] leading-[19.5px] tracking-0 text-[#B39BFD]">
-                        Confirmed
-                      </p>
-                    </div>
-                  </div>
+               
                   <div className="px-[16px] py-[12px] flex justify-between items-center">
                     <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#808080]">
-                      Tx Hash
+                      Timestamp
                     </p>
-                    <div className="flex items-center gap-[8px]">
+                    <div className="flex items-center gap-[1px]">
                       <p className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 text-[#ffffff]">
-                        {formatAddress('abcd......1234')}
+                        5KJpxR7qMn.. 
                       </p>
-                      <button
-                        onClick={() => handleCopyTxHash('abcd......1234')}
-                        className="font-['Tomato_Grotesk'] font-normal text-[13px] leading-[19.5px] tracking-0 bg-[#222222] py-[8px] px-[9px] rounded-[7px] border border-[#808080] hover:bg-[#2a2a2a] transition-colors"
-                      >
-                        Copy
-                      </button>
+                      <ArrowUpRightIcon width={12} height={12} color="#ffffff" />
                     </div>
                   </div>
                 </div>
@@ -326,51 +312,18 @@ export default function GhostSwap() {
               </div>
             ) : showOneTimeAddress ? (
               // One-Time Address View
-              <div className="max-w-[520px] mx-auto flex flex-col items-center gap-[24px] mt-[78px] ">
-                <div className="flex flex-col gap-3 items-center">
-                  <LogoIcon size={88} color="#A78BFA" />
-                  <h2 className="font-['Tomato_Grotesk'] font-bold text-[24px] leading-[33px] tracking-0 text-[#ffffff] text-center">
-                    Swap Via One-Time Address
-                  </h2>
-                  <p className="font-['Tomato_Grotesk'] font-normal text-[14px] leading-[18px] tracking-0 text-[#808080] text-center px-2">
-                    Send funds from your wallet to this one-time address to complete your transaction.
-                  </p>
-                </div>
-
-                <div className="w-full bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[16px] flex flex-col gap-[12px]">
-                  <p className="font-['Tomato_Grotesk'] font-normal text-[11px] leading-[16.5px] tracking-0 text-[#808080]">
-                    One-Time Address
-                  </p>
-                  <p className="font-['Tomato_Grotesk'] font-semibold text-[12px] leading-[21px] tracking-0 text-[#ffffff] break-all">
-                    {oneTimeAddress}
-                  </p>
-                  <button
-                    onClick={handleCopyAddress}
-                    className="bg-[#222222] rounded-full p-[12px] flex items-center justify-center gap-[4px] hover:border-[#B39BFD] transition-colors"
-                  >
-                    <ClipboardIcon width={20} height={20} color="#ffffff" />
-                    <span className="font-['Tomato_Grotesk'] font-semibold text-[16px] leading-[24px] tracking-0 text-[#ffffff]">
-                      Copy Address
-                    </span>
-                  </button>
-                </div>
-
-                <div className="w-full bg-[#b49bfd06] border border-[#b49bfd14] rounded-[12px] p-[10px] flex items-start gap-2">
-                  <InfoIcon width={20} height={20} color="#A78BFA" />
-                  <p className="font-['Tomato_Grotesk'] font-normal text-[12px] leading-[18.6px] tracking-0 text-[#A78BFA] max-w-[314px]">
-                    Only send requested currency to this address, any other funds sent may result in loss of funds.
-                  </p>
-                </div>
-
-                <button
-                  onClick={handleISent}
-                  className="w-full bg-[#B39BFD] rounded-full py-[16px] px-[20px] hover:bg-[#9B8BED] transition-colors"
-                >
-                  <span className="font-['Tomato_Grotesk'] font-bold text-[20px] leading-[24px] tracking-0 text-[#000000]">
-                    I Sent
-                  </span>
-                </button>
-              </div>
+              <OneTimeAddressView
+                title="Swap Via One-Time Address"
+                subtitle="Send funds from your wallet to this one-time address to complete your transaction."
+                address={oneTimeAddress}
+                logoColor="#A78BFA"
+                buttonColor="#B39BFD"
+                buttonHoverColor="#9B8BED"
+                buttonText="I Sent"
+                onCopy={handleCopyAddress}
+                onConfirm={handleISent}
+                copyButtonHoverColor="#B39BFD"
+              />
             ) : showMethodSelection ? (
               // Method Selection View
               <MethodSelection

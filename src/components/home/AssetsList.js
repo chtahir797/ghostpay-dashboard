@@ -1,5 +1,6 @@
 import React from 'react';
 import ArrowRightIcon from '@/icons/ArrowRightIcon';
+import AssetIcon from '@/components/common/dropdown/AssetIcon';
 
 const AssetsList = ({ assets, onSeeAll }) => {
   const getChangeColor = (change) => {
@@ -33,17 +34,7 @@ const AssetsList = ({ assets, onSeeAll }) => {
             className="bg-[#0B0B0B] border border-[#151515] rounded-[12px] p-[15px] flex justify-between items-center hover:bg-[#0D0D0D] transition-colors"
           >
             <div className="flex items-center gap-[8px]">
-              <div className="w-[36px] h-[36px] bg-[#151515] rounded-full flex items-center justify-center overflow-hidden flex-shrink-0">
-                {asset.icon ? (
-                  <img
-                    src={asset.icon}
-                    alt={asset.name}
-                    className="w-[20px] h-[20px] object-contain opacity-80"
-                  />
-                ) : (
-                  <div className="w-[20px] h-[20px] bg-[#808080] rounded-full"></div>
-                )}
-              </div>
+              <AssetIcon icon={asset.icon?.toLowerCase() || 'eth'} size={36} />
               <div className="flex flex-col gap-[4px] min-w-0">
                 <span className="font-['Tomato_Grotesk'] font-semibold text-[14px] leading-[20px] text-white truncate">
                   {asset.name}

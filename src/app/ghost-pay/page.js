@@ -15,10 +15,13 @@ import AssetSelector from '@/components/common/dropdown/AssetSelector';
 import AssetSelectionModal from '@/components/common/dropdown/AssetSelectionModal';
 import AssetIcon from '@/components/common/dropdown/AssetIcon';
 import LinkInput from '@/components/common/LinkInput';
-import { CornerDownLeft, LinkIcon, ChevronLeftIcon, Check, Share2, MessageSquare, QrCode, MoreVertical } from 'lucide-react';
+import NumericKeypad from '@/components/common/NumericKeypad';
+import { CornerDownLeft, LinkIcon, ChevronLeftIcon, Check, Share2, MessageSquare, QrCode, MoreVertical, X } from 'lucide-react';
 import ChatBubbleIcon from '@/icons/ChatBubbleIcon';
 import MiniQRCodeIcon from '@/icons/MiniQRCodeIcon';
 import MethodSelection from '@/components/common/MethodSelection';
+import OneTimeAddressView from '@/components/common/OneTimeAddressView';
+import TransactionSuccessView from '@/components/common/TransactionSuccessView';
 import ClockIcon from '@/icons/ClockIcon';
 import WalletIcon from '@/icons/WalletIcon';
 
@@ -36,7 +39,11 @@ export default function GhostPay() {
   const [showLinkCreated, setShowLinkCreated] = useState(false);
   const [showEnterLink, setShowEnterLink] = useState(false);
   const [showMethodSelection, setShowMethodSelection] = useState(false);
+  const [showOneTimeAddress, setShowOneTimeAddress] = useState(false);
+  const [showPaymentComplete, setShowPaymentComplete] = useState(false);
+  const [showKeypad, setShowKeypad] = useState(false);
   const [ghostPayLink, setGhostPayLink] = useState('');
+  const oneTimeAddress = '0x5c8dd25b28c8461ef210412b5b24f67dd40e918f';
   const [amount, setAmount] = useState('1.25');
   const [memo, setMemo] = useState('');
   const [showAssetDropdown, setShowAssetDropdown] = useState(false);
@@ -65,8 +72,66 @@ export default function GhostPay() {
   };
 
   const handleOneTimeAddress = () => {
-    // Handle one-time address
-    console.log('Use one-time address');
+    setShowOneTimeAddress(true);
+  };
+
+  const handleCopyAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(oneTimeAddress);
+    } catch (err) {
+      console.error('Failed to copy address:', err);
+    }
+  };
+
+  const handleISent = () => {
+    // Show payment complete screen
+    setShowPaymentComplete(true);
+    setShowOneTimeAddress(false);
+  };
+
+  const formatTimestamp = () => {
+    const now = new Date();
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = months[now.getMonth()];
+    const day = now.getDate();
+    const year = now.getFullYear();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const formattedHours = hours.toString().padStart(2, '0');
+    return `${month} ${day}, ${year}, ${formattedHours}:${minutes} ${ampm}`;
+  };
+
+  const formatAddress = (address) => {
+    if (!address) return 'abcd......1234';
+    if (address.length <= 12) return address;
+    return `${address.slice(0, 4)}......${address.slice(-4)}`;
+  };
+
+  const handleCopyTxHash = (txHash) => {
+    navigator.clipboard.writeText(txHash || 'abcd......1234');
+  };
+
+  const handleKeypadKeyPress = (value) => {
+    if (amount === '0' || amount === '') {
+      setAmount(value);
+    } else {
+      setAmount(amount + value);
+    }
+  };
+
+  const handleKeypadBackspace = () => {
+    if (amount.length > 0) {
+      setAmount(amount.slice(0, -1));
+    }
+  };
+
+  const handleKeypadDecimal = () => {
+    if (!amount.includes('.')) {
+      setAmount(amount + '.');
+    }
   };
 
   const handlePasteClick = async () => {
@@ -142,8 +207,20 @@ export default function GhostPay() {
         </div>
 
         {/* Mobile Header */}
-        {showLinkCreated ? (
-          <header className="md:hidden py-[23px] px-[20px] border-b border-[#151515] flex items-center gap-[10px]">
+        {showPaymentComplete ? (
+          <header className="md:hidden py-[23px] px-[25px] border-b border-[#151515] flex items-center justify-between gap-[10px]">
+            <h1 className="font-['Tomato_Grotesk'] font-bold text-[24px] leading-[36px] tracking-[-0.5px] text-[#ffffff]">
+              Payment Complete
+            </h1>
+            <button
+              onClick={() => setShowPaymentComplete(false)}
+              className="p-[6px] hover:bg-[#151515] rounded-[8px] transition-colors"
+            >
+              <X width={18} height={18} color="#ffffff" />
+            </button>
+          </header>
+        ) : showLinkCreated ? (
+          <header className="md:hidden py-[23px] px-[25px] border-b border-[#151515] flex items-center gap-[10px]">
             <button
               onClick={() => setShowLinkCreated(false)}
               className="p-[6px] hover:bg-[#151515] rounded-[8px] transition-colors"
@@ -154,13 +231,14 @@ export default function GhostPay() {
               Ghost Pay
             </h1>
           </header>
-        ) : showCreateForm || showEnterLink || showMethodSelection ? (
-          <header className="md:hidden py-[23px] px-[20px] border-b border-[#151515] flex items-center gap-[10px]">
+        ) : showCreateForm || showEnterLink || showMethodSelection || showOneTimeAddress ? (
+          <header className="md:hidden py-[23px] px-[25px] border-b border-[#151515] flex items-center gap-[10px]">
             <button
               onClick={() => {
                 setShowCreateForm(false);
                 setShowEnterLink(false);
                 setShowMethodSelection(false);
+                setShowOneTimeAddress(false);
               }}
               className="p-[6px] hover:bg-[#151515] rounded-[8px] transition-colors"
             >
@@ -172,8 +250,42 @@ export default function GhostPay() {
           </header>
         ) : null}
 
-        <main className="flex flex-col gap-[20px] px-[12px] md:px-[20px]">
-          {showMethodSelection ? (
+        <main className="flex flex-col gap-[20px] px-[25px]">
+          {showPaymentComplete ? (
+            // Payment Complete View
+            <TransactionSuccessView
+              title="Payment Complete"
+              amount={amount}
+              asset={selectedAsset}
+              usdValue={`$${calculateUSDValue()} USD`}
+              logoColor="#59FF96"
+              buttonColor="#59FF96"
+              buttonHoverColor="#4DE885"
+              amountColor="#59FF96"
+              statusColor="#59FF96"
+              via="One-Time Address"
+              txHash="abcd......1234"
+              onCopyTxHash={handleCopyTxHash}
+              formatAddress={formatAddress}
+              formatTimestamp={formatTimestamp}
+              maxWidth="352px"
+            />
+          ) : showOneTimeAddress ? (
+            // One-Time Address View
+            <OneTimeAddressView
+              title="Send Via One-Time Address"
+              subtitle="Send funds from your wallet to this one-time address to complete your transaction."
+              address={oneTimeAddress}
+              logoColor="#59FF96"
+              buttonColor="#59FF96"
+              buttonHoverColor="#4DE885"
+              buttonText="I Sent"
+              onCopy={handleCopyAddress}
+              onConfirm={handleISent}
+              copyButtonHoverColor="#59FF96"
+              maxWidth="352px"
+            />
+          ) : showMethodSelection ? (
             // Method Selection Screen
             <MethodSelection
               title="Choose Method To Pay"
@@ -277,7 +389,7 @@ export default function GhostPay() {
                   </button>
                   <button className="flex-1 bg-[#0B0B0B] border border-[#151515] rounded-[12px] py-[12px] hover:bg-[#151515] transition-colors flex flex-col items-center gap-[4px]">
                     <MoreVertical width={24} height={24} color="#808080" />
-                      <span className="font-['Tomato_Grotesk'] font-bold text-[10px] leading-[15px] tracking-0 text-white">
+                    <span className="font-['Tomato_Grotesk'] font-bold text-[10px] leading-[15px] tracking-0 text-white">
                       More
                     </span>
                   </button>
@@ -302,13 +414,26 @@ export default function GhostPay() {
                 <p className="font-['Tomato_Grotesk'] font-semibold text-[14px] leading-[15px] tracking-0 text-[#808080]">
                   Amount
                 </p>
-                <div className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[20px] flex flex-col gap-[8px]">
+                <div 
+                  className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[20px] flex flex-col gap-[8px]"
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                      setShowKeypad(true);
+                    }
+                  }}
+                >
                   <div className="flex items-center justify-between">
                     <input
                       type="text"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
-                      className="w-full font-['Tomato_Grotesk'] font-bold text-[48px] md:text-[60px] leading-[48px] md:leading-[60px] tracking-0 text-[#ffffff] bg-transparent border-none outline-none flex-1"
+                      onFocus={() => {
+                        if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                          setShowKeypad(true);
+                        }
+                      }}
+                      readOnly={typeof window !== 'undefined' && window.innerWidth < 768}
+                      className="w-full font-['Tomato_Grotesk'] font-bold text-[48px] md:text-[60px] leading-[48px] md:leading-[60px] tracking-0 text-[#ffffff] bg-transparent border-none outline-none flex-1 cursor-pointer md:cursor-text"
                       placeholder="0.00"
                     />
                     <button className="bg-[#222222] rounded-[18px] px-[12px] py-[6px] hover:border-[#151515] transition-colors font-['Tomato_Grotesk'] font-semibold text-[10px] leading-[16px] tracking-0 text-[#ffffff]">
@@ -384,69 +509,51 @@ export default function GhostPay() {
                 />
               </div>
 
+              {/* Mobile Numeric Keypad */}
+              {showKeypad && (
+                <div className="md:hidden">
+                  <NumericKeypad
+                    onKeyPress={handleKeypadKeyPress}
+                    onBackspace={handleKeypadBackspace}
+                    onDecimal={handleKeypadDecimal}
+                  />
+                </div>
+              )}
+
               {/* Create Link Button */}
               <button
                 onClick={handleCreateLink}
                 className="w-full bg-[#59FF96] rounded-full py-[16px] px-[20px] hover:bg-[#4FE885] transition-colors"
               >
                 <span className="font-['Tomato_Grotesk'] font-bold text-[20px] leading-[24px] tracking-0 text-[#000000]">
-                  Create Link
+                  Generate Link
                 </span>
               </button>
             </div>
           ) : (
             // Initial Screen
-            <div className="w-full max-w-[654px] mx-auto h-full flex flex-col items-center justify-center gap-[32px] pt-[40px]">
-              <div className="flex flex-col items-center gap-[12px]">
-                <LogoIcon size={88} color="#59FF96" />
-                <h2 className="font-['Tomato_Grotesk'] font-bold text-[32px] leading-[33px] tracking-0 text-[#ffffff] text-center">
-                  Ghost Pay
-                </h2>
-                <p className="font-['Tomato_Grotesk'] font-normal text-[16px] leading-[18px] tracking-0 text-[#808080] text-center">
-                  Request crypto payments with a shareable link. Pay with /qr, wallet, or a one-time stealth address.
-                </p>
-              </div>
 
-              <div className="flex flex-col md:flex-row gap-6 w-full">
-                <button
-                  onClick={handleCreateLinkClick}
-                  className="flex-1 bg-[#0B0B0B] border border-[#151515] rounded-[20px] py-[20px] flex flex-col items-center hover:border-[#59FF96] transition-colors"
-                >
-                  <div className="max-w-[193px] flex flex-col gap-2">
-                    <div className="flex flex-col items-center gap-3">
-                      <div className="p-[12px] bg-[#34d39920] border border-[#59FF96] rounded-[8px]">
-                        <LinkIcon size={28} color="#ffffff" />
-                      </div>
-                      <h3 className="font-['Tomato_Grotesk'] font-bold text-[16px] leading-[16px] tracking-0 text-[#ffffff]">
-                        Create a Ghost Pay Link
-                      </h3>
-                    </div>
-                    <p className="font-['Tomato_Grotesk'] font-normal text-[12px] leading-[18px] tracking-0 text-[#808080] text-center">
-                      Set an amount and share a link to request payment from anyone.
-                    </p>
-                  </div>
-                </button>
 
-                <button
-                  onClick={handleEnterLinkClick}
-                  className="flex-1 bg-[#0B0B0B] border border-[#151515] rounded-[20px] py-[20px] flex flex-col items-center hover:border-[#59FF96] transition-colors"
-                >
-                  <div className="max-w-[193px] flex flex-col gap-2">
-                    <div className="flex flex-col items-center gap-3">
-                      <div className="p-[12px] bg-[#34d39920] border border-[#59FF96] rounded-[8px]">
-                        <CornerDownLeft size={28} color="#ffffff" />
-                      </div>
-                      <h3 className="font-['Tomato_Grotesk'] font-bold text-[16px] leading-[16px] tracking-0 text-[#ffffff]">
-                        Enter Ghost Pay Link
-                      </h3>
-                    </div>
-                    <p className="font-['Tomato_Grotesk'] font-normal text-[12px] leading-[18px] tracking-0 text-[#808080] text-center">
-                      Scan QR, pay from walllet, or make a one-time stealth address.
-                    </p>
-                  </div>
-                </button>
-              </div>
-            </div>
+            <MethodSelection
+              title=" Ghost Pay"
+              subtitle="Request crypto payments with a shareable link. Pay with /qr, wallet, or a one-time stealth address."
+              logoColor="#59FF96"
+              borderColor="#59FF96"
+              methods={[
+                {
+                  icon: LinkIcon,
+                  title: "Create a Ghost Pay Link",
+                  description: "Set an amount and share a link to request payment from anyone.",
+                  onClick: handleCreateLinkClick,
+                },
+                {
+                  icon: CornerDownLeft,
+                  title: "Enter Ghost Pay Link",
+                  description: "Scan QR, pay from wallet, or generate a one-time stealth address.",
+                  onClick: handleEnterLinkClick,
+                },
+              ]}
+            />
           )}
         </main>
       </div>

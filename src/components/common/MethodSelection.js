@@ -39,7 +39,7 @@ const MethodSelection = ({
             <button
               key={index}
               onClick={method.onClick}
-              className="flex-1 bg-[#0B0B0B] border border-[#151515] rounded-[20px] py-[20px] flex flex-col items-center transition-colors"
+              className="flex-1 bg-[#0B0B0B] border border-[#151515] rounded-[20px] p-[21px] md:py-[20px] flex flex-col md:items-center transition-colors"
               style={{
                 '--border-color': borderColor,
               }}
@@ -50,24 +50,26 @@ const MethodSelection = ({
                 e.currentTarget.style.borderColor = '#151515';
               }}
             >
-              <div className="max-w-[193px] flex flex-col gap-2">
-                <div className="flex flex-col items-center gap-3">
-                  <div
-                    className="p-[12px] border rounded-[8px]"
-                    style={{
-                      backgroundColor: getIconBgColor(),
-                      borderColor: logoColor,
-                    }}
-                  >
-                    <IconComponent size={28} color="#ffffff" />
-                  </div>
-                  <h3 className="font-['Tomato_Grotesk'] font-bold text-[16px] leading-[16px] tracking-0 text-[#ffffff]">
+              <div className="md:max-w-[193px] max-w-full flex flex-row md:flex-col items-start md:items-center gap-3">
+
+                <div
+                  className="p-[12px] border rounded-[8px]"
+                  style={{
+                    backgroundColor: getIconBgColor(),
+                    borderColor: logoColor,
+                  }}
+                >
+                  <IconComponent size={28} color="#ffffff" />
+                </div>
+
+                <div className="flex flex-col md:items-center items-start gap-2">
+                  <h3 className="font-['Tomato_Grotesk'] font-bold text-[16px] leading-[16px] tracking-0 text-[#ffffff] md:text-center text-left">
                     {method.title}
                   </h3>
+                  <p className="font-['Tomato_Grotesk'] font-normal text-[12px] leading-[18px] tracking-0 text-[#808080] md:text-center text-left">
+                    {method.description}
+                  </p>
                 </div>
-                <p className="font-['Tomato_Grotesk'] font-normal text-[12px] leading-[18px] tracking-0 text-[#808080] text-center">
-                  {method.description}
-                </p>
               </div>
             </button>
           );

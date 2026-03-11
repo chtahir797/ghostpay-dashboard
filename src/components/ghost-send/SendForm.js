@@ -19,6 +19,7 @@ const SendForm = ({
   onSend,
 }) => {
   const [showAssetModal, setShowAssetModal] = useState(false);
+  const [showKeypad, setShowKeypad] = useState(false);
 
   const handleKeypadKeyPress = (value) => {
     if (amount === '0' || amount === '') {
@@ -55,7 +56,7 @@ const SendForm = ({
 
   return (
     <>
-      <div className="w-full max-w-[520px] mx-auto pt-[40px] flex flex-col gap-[20px] px-[25px] md:px-0">
+      <div className="w-full max-w-[520px] mx-auto pt-[40px] flex flex-col gap-[20px]">
         {/* Recipient Field */}
         <div className="flex flex-col gap-[10px]">
           <p className="font-['Tomato_Grotesk'] font-semibold text-[14px] leading-[15px] tracking-0 text-[#808080]">
@@ -79,14 +80,26 @@ const SendForm = ({
           <p className="font-['Tomato_Grotesk'] font-semibold text-[14px] leading-[15px] tracking-0 text-[#808080]">
             Amount
           </p>
-          <div className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[20px]">
+          <div 
+            className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[20px]"
+            onClick={() => {
+              if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                setShowKeypad(true);
+              }
+            }}
+          >
             <div className="flex items-center justify-between mb-[12px]">
               {/* Mobile: Read-only input */}
               <input
                 type="text"
                 value={amount}
                 readOnly
-                className="md:hidden bg-transparent border-none outline-none font-['Tomato_Grotesk'] font-extrabold text-[48px] leading-[60px] tracking-0 text-[#ffffff] w-full"
+                onFocus={() => {
+                  if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                    setShowKeypad(true);
+                  }
+                }}
+                className="md:hidden bg-transparent border-none outline-none font-['Tomato_Grotesk'] font-extrabold text-[48px] leading-[60px] tracking-0 text-[#ffffff] w-full cursor-pointer"
                 style={{ caretColor: 'transparent' }}
               />
               {/* Desktop: Editable input */}
@@ -131,11 +144,15 @@ const SendForm = ({
         </div>
 
         {/* Numeric Keypad - Mobile Only */}
-        <NumericKeypad
-          onKeyPress={handleKeypadKeyPress}
-          onBackspace={handleKeypadBackspace}
-          onDecimal={handleKeypadDecimal}
-        />
+        {showKeypad && (
+          <div className="md:hidden">
+            <NumericKeypad
+              onKeyPress={handleKeypadKeyPress}
+              onBackspace={handleKeypadBackspace}
+              onDecimal={handleKeypadDecimal}
+            />
+          </div>
+        )}
 
         {/* Send Button */}
         <button

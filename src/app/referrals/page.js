@@ -7,6 +7,7 @@ import YourPointsCard from "@/components/referrals/YourPointsCard";
 import ReferralCodeCard from "@/components/referrals/ReferralCodeCard";
 import ReferralsTable from "@/components/referrals/ReferralsTable";
 import InformationBanner from "@/components/referrals/InformationBanner";
+import { ChevronLeftIcon } from 'lucide-react';
 
 const referrals = [
   { id: 1, wallet: "4a2B...8F3c", joined: "Feb 28", volume: "$4,210", points: "+420", status: "Active" },
@@ -39,7 +40,21 @@ export default function Referrals() {
   return (
     <DashboardLayout>
       <div className="flex flex-col h-full bg-[#000000]">
-        <Header title="Referrals" subtitle="Invite friends and earn points on their volume." />
+        {/* Desktop Header */}
+        <div className="hidden md:block">
+          <Header title="Referrals" subtitle="Invite friends and earn points on their volume." />
+        </div>
+
+        {/* Mobile Header */}
+        <header className="md:hidden py-[23px] px-[25px] border-b border-[#151515] flex items-center gap-[10px]">
+          <button className="p-[6px] hover:bg-[#151515] rounded-[8px] transition-colors">
+            <ChevronLeftIcon width={18} height={18} color="#ffffff" />
+          </button>
+          <h1 className="font-['Tomato_Grotesk'] font-bold text-[24px] leading-[36px] tracking-[-0.5px] text-[#ffffff]">
+            Referrals
+          </h1>
+        </header>
+
         <main className="md:p-[12px] p-[25px] flex flex-col gap-[20px]">
           {/* Top Cards Row */}
           <div className="flex flex-col lg:flex-row gap-[20px] lg:gap-[24px]">

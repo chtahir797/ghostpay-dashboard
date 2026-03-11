@@ -40,10 +40,11 @@ const Aside = () => {
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             const isGhostSend = item.name === 'Ghost Send';
+            const isGhostPay = item.name === 'Ghost Pay';
             const isGhostSwap = item.name === 'Ghost Swap';
             const isGhostRoute = item.name === 'Ghost Route';
             const isReferrals = item.name === 'Referrals';
-            const activeBgColor = isGhostSend && isActive ? 'bg-[#FB923C]' : isGhostSwap && isActive ? 'bg-[#B39BFD]' : isGhostRoute && isActive ? 'bg-[#8CFFEC]' : isReferrals && isActive ? 'bg-[#8CFFEC]' : isActive ? 'bg-[#8CFFEC]' : '';
+            const activeBgColor = isGhostSend && isActive ? 'bg-[#FB923C]' : isGhostPay && isActive ? 'bg-[#59FF96]' : isGhostSwap && isActive ? 'bg-[#B39BFD]' : isGhostRoute && isActive ? 'bg-[#FB3C3C]' : isReferrals && isActive ? 'bg-[#8CFFEC]' : isActive ? 'bg-[#8CFFEC]' : '';
             return (
               <div key={item.name} className="px-[17px]">
                 <Link
