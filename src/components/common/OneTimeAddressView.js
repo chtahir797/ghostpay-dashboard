@@ -46,7 +46,7 @@ const OneTimeAddressView = ({
   };
 
   return (
-    <div className="mx-auto flex flex-col items-center gap-[24px] mt-[78px]" style={{ maxWidth }}>
+    <div className="mx-auto flex flex-col items-center gap-[24px] mt-[78px] pb-[20px]" style={{ maxWidth }}>
       <div className="flex flex-col gap-3 items-center">
         <LogoIcon size={88} color={logoColor} />
         <h2 className="font-['Tomato_Grotesk'] font-bold text-[24px] leading-[33px] tracking-0 text-[#ffffff] text-center">

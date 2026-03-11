@@ -56,7 +56,7 @@ const TransactionSuccessView = ({
   const finalStatusColor = statusColor || logoColor;
 
   return (
-    <div className="w-full mx-auto pt-[40px] flex flex-col gap-[24px] " style={{ maxWidth }}>
+    <div className="w-full mx-auto pt-[40px] flex flex-col gap-[24px] pb-[20px] " style={{ maxWidth }}>
       {/* Logo */}
       <div className="flex justify-center">
         <LogoIcon width={82} height={82} color={logoColor} />

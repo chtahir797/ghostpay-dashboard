@@ -170,7 +170,7 @@ export default function GhostSwap() {
             </h1>
           </header>
         )}
-        <main className="flex justify-center h-full mb-5 md:mb-0">
+        <main className="flex justify-center h-full mb-5 md:mb-0 px-[25px]">
           <div className="w-full flex flex-col gap-[24px]">
             {showSwapComplete ? (
               // Swap Complete View
