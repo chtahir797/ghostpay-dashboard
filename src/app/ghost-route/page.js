@@ -448,7 +448,7 @@ export default function GhostRoute() {
         </main>
 
         {/* Route Funds Button - Fixed at bottom above navigation */}
-        <div className="md:hidden px-[25px] pb-[20px]  z-40">
+        <div className="md:hidden fixed bottom-[90px] left-0 right-0 px-[25px] pb-[20px] z-40">
           {isComplete ? (
             <Link
               href="/"

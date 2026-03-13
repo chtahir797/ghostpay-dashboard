@@ -68,7 +68,7 @@ const WalletBalanceCard = ({ balance, change, changeLabel = "today", onHideBalan
           return button.href === '#' ? (
             <button
               key={index}
-              className="w-[70px] h-[56px] md:w-[120px] md:h-[40px] bg-[#ffffff06] border border-[#ffffff05] rounded-[10px] flex flex-col md:flex-row items-center justify-center gap-[4px] group hover:bg-[#222] transition-colors flex-shrink-0"
+              className="w-[70px] h-[56px] md:w-[120px] md:h-[40px] bg-[#151515] border border-[#ffffff05] rounded-[10px] flex flex-col md:flex-row items-center justify-center gap-[4px] group hover:bg-[#222] transition-colors flex-shrink-0"
             >
               {buttonContent}
             </button>
@@ -76,7 +76,7 @@ const WalletBalanceCard = ({ balance, change, changeLabel = "today", onHideBalan
             <Link
               key={index}
               href={button.href}
-              className="w-[70px] h-[56px] md:w-[120px] md:h-[40px] bg-[#151515] rounded-[10px] flex flex-col md:flex-row items-center justify-center gap-[4px] group hover:bg-[#222] transition-colors flex-shrink-0"
+              className="w-[70px] h-[56px] md:w-[120px] md:h-[40px] bg-[#151515] border border-[#ffffff05]  rounded-[10px] flex flex-col md:flex-row items-center justify-center gap-[4px] group hover:bg-[#222] transition-colors flex-shrink-0"
             >
               {buttonContent}
             </Link>

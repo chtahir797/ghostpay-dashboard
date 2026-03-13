@@ -33,10 +33,8 @@ const CurrencyCard = ({
         <input
           type="text"
           value={amount}
-          readOnly={readOnly}
-          onChange={(e) => !readOnly && onAmountChange(e.target.value)}
-          className={`md:hidden w-full font-['Tomato_Grotesk'] font-extrabold text-[48px] leading-[51px] tracking-0 text-[#ffffff] bg-transparent border-none outline-none flex-1 min-w-0 pointer-events-none`}
-          style={{ caretColor: 'transparent' }}
+          onChange={(e) => onAmountChange(e.target.value)}
+          className="md:hidden w-full font-['Tomato_Grotesk'] font-extrabold text-[48px] leading-[51px] tracking-0 text-[#ffffff] bg-transparent border-none outline-none flex-1 min-w-0"
         />
         {/* Desktop */}
         <input

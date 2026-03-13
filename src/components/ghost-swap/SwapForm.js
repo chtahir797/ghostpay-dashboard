@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import CurrencyCard from './CurrencyCard';
 import SwapIcon from '@/icons/SwapIcon';
 import PersonIcon from '@/icons/PersonIcon';
-import NumericKeypad from '../common/NumericKeypad';
 
 const SwapForm = ({
   payAmount,
@@ -23,62 +22,16 @@ const SwapForm = ({
   onActiveInputChange,
 }) => {
   const [localActiveInput, setLocalActiveInput] = useState(activeInput || 'pay');
-  const [showKeypad, setShowKeypad] = useState(false);
 
   const currentActiveInput = activeInput || localActiveInput;
   const setActiveInput = onActiveInputChange || setLocalActiveInput;
-
-  const handleKeypadKeyPress = (value) => {
-    const currentAmount = currentActiveInput === 'pay' ? payAmount : receiveAmount;
-    if (currentAmount === '0' || currentAmount === '') {
-      if (currentActiveInput === 'pay') {
-        onPayAmountChange(value);
-      } else {
-        onReceiveAmountChange(value);
-      }
-    } else {
-      if (currentActiveInput === 'pay') {
-        onPayAmountChange(currentAmount + value);
-      } else {
-        onReceiveAmountChange(currentAmount + value);
-      }
-    }
-  };
-
-  const handleKeypadBackspace = () => {
-    const currentAmount = currentActiveInput === 'pay' ? payAmount : receiveAmount;
-    if (currentAmount.length > 0) {
-      const newAmount = currentAmount.slice(0, -1);
-      if (currentActiveInput === 'pay') {
-        onPayAmountChange(newAmount);
-      } else {
-        onReceiveAmountChange(newAmount);
-      }
-    }
-  };
-
-  const handleKeypadDecimal = () => {
-    const currentAmount = currentActiveInput === 'pay' ? payAmount : receiveAmount;
-    if (!currentAmount.includes('.')) {
-      if (currentActiveInput === 'pay') {
-        onPayAmountChange(currentAmount + '.');
-      } else {
-        onReceiveAmountChange(currentAmount + '.');
-      }
-    }
-  };
 
   return (
     <div className="w-full max-w-[520px] mx-auto flex flex-col gap-[24px] mt-[40px] md:px-0">
       {/* You Pay and You Receive Cards */}
       <div className="flex flex-col gap-[16px] relative">
         {/* You Pay Card */}
-        <div onClick={() => {
-          setActiveInput('pay');
-          if (typeof window !== 'undefined' && window.innerWidth < 768) {
-            setShowKeypad(true);
-          }
-        }}>
+        <div onClick={() => setActiveInput('pay')}>
           <CurrencyCard
             label="You Pay"
             amount={payAmount}
@@ -89,13 +42,8 @@ const SwapForm = ({
             onCurrencyClick={onPayCurrencyClick}
             showBalance={true}
             isActive={currentActiveInput === 'pay'}
-            readOnly={true}
-            onClick={() => {
-              setActiveInput('pay');
-              if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                setShowKeypad(true);
-              }
-            }}
+            readOnly={false}
+            onClick={() => setActiveInput('pay')}
           />
         </div>
 
@@ -107,12 +55,7 @@ const SwapForm = ({
         </div>
 
         {/* You Receive Card */}
-        <div onClick={() => {
-          setActiveInput('receive');
-          if (typeof window !== 'undefined' && window.innerWidth < 768) {
-            setShowKeypad(true);
-          }
-        }}>
+        <div onClick={() => setActiveInput('receive')}>
           <CurrencyCard
             label="You Receive"
             amount={receiveAmount}
@@ -121,13 +64,8 @@ const SwapForm = ({
             onAmountChange={onReceiveAmountChange}
             onCurrencyClick={onReceiveCurrencyClick}
             isActive={currentActiveInput === 'receive'}
-            readOnly={true}
-            onClick={() => {
-              setActiveInput('receive');
-              if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                setShowKeypad(true);
-              }
-            }}
+            readOnly={false}
+            onClick={() => setActiveInput('receive')}
           />
         </div>
       </div>
@@ -165,17 +103,6 @@ const SwapForm = ({
           ))}
         </div>
       </div>
-
-      {/* Numeric Keypad - Mobile Only */}
-      {showKeypad && (
-        <div className="md:hidden">
-          <NumericKeypad
-            onKeyPress={handleKeypadKeyPress}
-            onBackspace={handleKeypadBackspace}
-            onDecimal={handleKeypadDecimal}
-          />
-        </div>
-      )}
 
       {/* Swap Button - Mobile shows "Swap", Desktop shows "Continue" */}
       <button

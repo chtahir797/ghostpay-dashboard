@@ -104,7 +104,7 @@ export default function GhostPay() {
             </h1>
           </header>
         )}
-        <main className=" flex flex-col gap-[20px] px-[25px]">
+        <main className="flex flex-col gap-[20px] px-[25px] pb-[100px] md:pb-0">
           {showSuccess ? (
             // Transaction Success View
             <TransactionSuccessView

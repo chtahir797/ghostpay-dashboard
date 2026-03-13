@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import AssetSelector from '../common/dropdown/AssetSelector';
 import AssetIcon from '../common/dropdown/AssetIcon';
-import NumericKeypad from '../common/NumericKeypad';
 import AssetSelectionModal from '../common/dropdown/AssetSelectionModal';
 import ArrowDownIcon from '@/icons/ArrowDownIcon';
 
@@ -19,27 +18,6 @@ const SendForm = ({
   onSend,
 }) => {
   const [showAssetModal, setShowAssetModal] = useState(false);
-  const [showKeypad, setShowKeypad] = useState(false);
-
-  const handleKeypadKeyPress = (value) => {
-    if (amount === '0' || amount === '') {
-      onAmountChange(value);
-    } else {
-      onAmountChange(amount + value);
-    }
-  };
-
-  const handleKeypadBackspace = () => {
-    if (amount.length > 0) {
-      onAmountChange(amount.slice(0, -1));
-    }
-  };
-
-  const handleKeypadDecimal = () => {
-    if (!amount.includes('.')) {
-      onAmountChange(amount + '.');
-    }
-  };
 
   const handleAssetModalOpen = () => {
     setShowAssetModal(true);
@@ -80,34 +58,13 @@ const SendForm = ({
           <p className="font-['Tomato_Grotesk'] font-semibold text-[14px] leading-[15px] tracking-0 text-[#808080]">
             Amount
           </p>
-          <div 
-            className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[20px]"
-            onClick={() => {
-              if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                setShowKeypad(true);
-              }
-            }}
-          >
+          <div className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[20px]">
             <div className="flex items-center justify-between mb-[12px]">
-              {/* Mobile: Read-only input */}
-              <input
-                type="text"
-                value={amount}
-                readOnly
-                onFocus={() => {
-                  if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                    setShowKeypad(true);
-                  }
-                }}
-                className="md:hidden bg-transparent border-none outline-none font-['Tomato_Grotesk'] font-extrabold text-[48px] leading-[60px] tracking-0 text-[#ffffff] w-full cursor-pointer"
-                style={{ caretColor: 'transparent' }}
-              />
-              {/* Desktop: Editable input */}
               <input
                 type="text"
                 value={amount}
                 onChange={(e) => onAmountChange(e.target.value)}
-                className="hidden md:block bg-transparent border-none outline-none font-['Tomato_Grotesk'] font-extrabold text-[64px] leading-[80px] tracking-0 text-[#ffffff] w-full"
+                className="bg-transparent border-none outline-none font-['Tomato_Grotesk'] font-extrabold text-[48px] md:text-[64px] leading-[60px] md:leading-[80px] tracking-0 text-[#ffffff] w-full"
               />
               <button className="bg-[#222222] px-[12px] py-[6px] rounded-full transition-colors">
                 <span className="font-['Tomato_Grotesk'] font-semibold text-[10px] leading-[16px] tracking-0 text-[#ffffff]">USDC</span>
@@ -143,23 +100,24 @@ const SendForm = ({
           />
         </div>
 
-        {/* Numeric Keypad - Mobile Only */}
-        {showKeypad && (
-          <div className="md:hidden">
-            <NumericKeypad
-              onKeyPress={handleKeypadKeyPress}
-              onBackspace={handleKeypadBackspace}
-              onDecimal={handleKeypadDecimal}
-            />
-          </div>
-        )}
-
-        {/* Send Button */}
+        {/* Send Button - Desktop */}
         <button
           onClick={onSend}
-          className="w-full bg-[#FB923C] rounded-full py-[16px] px-[20px] hover:bg-[#EA7A2A] transition-colors"
+          className="hidden md:block w-full bg-[#FB923C] rounded-full py-[16px] px-[20px] hover:bg-[#EA7A2A] transition-colors"
         >
           <span className="font-['Tomato_Grotesk'] font-bold text-[20px] leading-[24px] tracking-0 text-[#000000]">
+            Send
+          </span>
+        </button>
+      </div>
+
+      {/* Send Button - Mobile Fixed - 24px above navigation bar */}
+      <div className="md:hidden fixed bottom-[104px] left-0 right-0 px-[25px] z-40">
+        <button
+          onClick={onSend}
+          className="w-full h-[60px] bg-[#FB923C] rounded-full hover:bg-[#EA7A2A] transition-colors flex items-center justify-center"
+        >
+          <span className="font-['Tomato_Grotesk'] font-bold text-[16px] leading-[24px] tracking-0 text-[#000000]">
             Send
           </span>
         </button>

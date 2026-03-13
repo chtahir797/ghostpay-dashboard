@@ -66,7 +66,7 @@ const MethodSelection = ({
                   <h3 className="font-['Tomato_Grotesk'] font-bold text-[16px] leading-[16px] tracking-0 text-[#ffffff] md:text-center text-left">
                     {method.title}
                   </h3>
-                  <p className="font-['Tomato_Grotesk'] font-normal text-[12px] leading-[18px] tracking-0 text-[#808080] md:text-center text-left">
+                  <p className="md:w-[215px] font-['Tomato_Grotesk'] font-normal text-[12px] leading-[18px] tracking-0 text-[#808080] md:text-center text-left">
                     {method.description}
                   </p>
                 </div>

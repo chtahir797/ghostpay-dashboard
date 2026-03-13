@@ -15,7 +15,6 @@ import AssetSelector from '@/components/common/dropdown/AssetSelector';
 import AssetSelectionModal from '@/components/common/dropdown/AssetSelectionModal';
 import AssetIcon from '@/components/common/dropdown/AssetIcon';
 import LinkInput from '@/components/common/LinkInput';
-import NumericKeypad from '@/components/common/NumericKeypad';
 import { CornerDownLeft, LinkIcon, ChevronLeftIcon, Check, Share2, MessageSquare, QrCode, MoreVertical, X } from 'lucide-react';
 import ChatBubbleIcon from '@/icons/ChatBubbleIcon';
 import MiniQRCodeIcon from '@/icons/MiniQRCodeIcon';
@@ -41,7 +40,6 @@ export default function GhostPay() {
   const [showMethodSelection, setShowMethodSelection] = useState(false);
   const [showOneTimeAddress, setShowOneTimeAddress] = useState(false);
   const [showPaymentComplete, setShowPaymentComplete] = useState(false);
-  const [showKeypad, setShowKeypad] = useState(false);
   const [ghostPayLink, setGhostPayLink] = useState('');
   const oneTimeAddress = '0x5c8dd25b28c8461ef210412b5b24f67dd40e918f';
   const [amount, setAmount] = useState('1.25');
@@ -114,25 +112,6 @@ export default function GhostPay() {
     navigator.clipboard.writeText(txHash || 'abcd......1234');
   };
 
-  const handleKeypadKeyPress = (value) => {
-    if (amount === '0' || amount === '') {
-      setAmount(value);
-    } else {
-      setAmount(amount + value);
-    }
-  };
-
-  const handleKeypadBackspace = () => {
-    if (amount.length > 0) {
-      setAmount(amount.slice(0, -1));
-    }
-  };
-
-  const handleKeypadDecimal = () => {
-    if (!amount.includes('.')) {
-      setAmount(amount + '.');
-    }
-  };
 
   const handlePasteClick = async () => {
     try {
@@ -414,26 +393,13 @@ export default function GhostPay() {
                 <p className="font-['Tomato_Grotesk'] font-semibold text-[14px] leading-[15px] tracking-0 text-[#808080]">
                   Amount
                 </p>
-                <div 
-                  className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[20px] flex flex-col gap-[8px]"
-                  onClick={() => {
-                    if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                      setShowKeypad(true);
-                    }
-                  }}
-                >
+                <div className="bg-[#0B0B0B] border border-[#151515] rounded-[16px] p-[20px] flex flex-col gap-[8px]">
                   <div className="flex items-center justify-between">
                     <input
                       type="text"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
-                      onFocus={() => {
-                        if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                          setShowKeypad(true);
-                        }
-                      }}
-                      readOnly={typeof window !== 'undefined' && window.innerWidth < 768}
-                      className="w-full font-['Tomato_Grotesk'] font-bold text-[48px] md:text-[60px] leading-[48px] md:leading-[60px] tracking-0 text-[#ffffff] bg-transparent border-none outline-none flex-1 cursor-pointer md:cursor-text"
+                      className="w-full font-['Tomato_Grotesk'] font-bold text-[48px] md:text-[60px] leading-[48px] md:leading-[60px] tracking-0 text-[#ffffff] bg-transparent border-none outline-none flex-1"
                       placeholder="0.00"
                     />
                     <button className="bg-[#222222] rounded-[18px] px-[12px] py-[6px] hover:border-[#151515] transition-colors font-['Tomato_Grotesk'] font-semibold text-[10px] leading-[16px] tracking-0 text-[#ffffff]">
@@ -509,17 +475,6 @@ export default function GhostPay() {
                 />
               </div>
 
-              {/* Mobile Numeric Keypad */}
-              {showKeypad && (
-                <div className="md:hidden">
-                  <NumericKeypad
-                    onKeyPress={handleKeypadKeyPress}
-                    onBackspace={handleKeypadBackspace}
-                    onDecimal={handleKeypadDecimal}
-                  />
-                </div>
-              )}
-
               {/* Create Link Button */}
               <button
                 onClick={handleCreateLink}
@@ -536,7 +491,7 @@ export default function GhostPay() {
 
             <MethodSelection
               title=" Ghost Pay"
-              subtitle="Request crypto payments with a shareable link. Pay with /qr, wallet, or a one-time stealth address."
+              subtitle="Request crypto payments with a shareable link. Pay with qr, wallet, or a one-time stealth address."
               logoColor="#59FF96"
               borderColor="#59FF96"
               methods={[
